@@ -1,3 +1,3 @@
 # my-first-backend
 run 
-npm install
+npm install first
