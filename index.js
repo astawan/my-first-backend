@@ -37,9 +37,11 @@ app.get("/all-mahasiswa", (req, res) => {
 
 app.get("/mahasiswa", (req, res) => {
     const id = req.body.id;
-    const mahasiswa = mahasiswas.filter((mahasiswa) => mahasiswa.id === id);
+    const selectedMahasiswa = mahasiswas.filter(
+        (mahasiswa) => mahasiswa.id === parseInt(id)
+    );
 
-    res.json(mahasiswa);
+    res.json(selectedMahasiswa);
 });
 
 app.post("/add-mahasiswa", (req, res) => {
@@ -55,11 +57,34 @@ app.post("/add-mahasiswa", (req, res) => {
 });
 
 app.put("/update-mahasiswa", (req, res) => {
-    //TODO update mahasiswa
+    const id = req.body.id;
+    const nama = req.body.nama;
+    const selectedMahasiswa = mahasiswas.filter(
+        (mahasiswa) => mahasiswa.id === parseInt(id)
+    )[0];
+    selectedMahasiswa.nama = nama;
+
+    res.json({
+        status: true,
+        code: 200,
+        msg: "Berhasil",
+    });
 });
 
 app.delete("/delete-mahasiswa", (req, res) => {
-    //TODO delete mahasiswa
+    const id = req.body.id;
+
+    const selectedMahasiswa = mahasiswas.filter(
+        (mahasiswa) => mahasiswa.id === parseInt(id)
+    )[0];
+    const indexSelected = mahasiswas.indexOf(selectedMahasiswa);
+    mahasiswas = mahasiswas.slice(indexSelected, 1);
+
+    res.json({
+        status: true,
+        code: 200,
+        msg: "Berhasil",
+    });
 });
 
 app.listen(3000, () => {}); //express mendengarkan req dari port
